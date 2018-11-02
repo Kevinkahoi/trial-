@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '346157092615912');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=346157092615912&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</head>
+<body>
+	<script>
+		// initialize and setup facebook js sdk
+		window.fbAsyncInit = function() {
+		    FB.init({
+		      appId      : '308528269737620',
+		      xfbml      : true,
+		      version    : 'v3.2'
+		    });
+		    FB.getLoginStatus(function(response) {
+		    	if (response.status === 'connected') {
+		    		document.getElementById('status').innerHTML = 'We are connected.';
+		    		document.getElementById('login').style.visibility = 'hidden';
+		    	} else if (response.status === 'not_authorized') {
+		    		document.getElementById('status').innerHTML = 'We are not logged in.'
+		    	} else {
+		    		document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+		    	}
+		    });
+		};
+		(function(d, s, id){
+		    var js, fjs = d.getElementsByTagName(s)[0];
+		    if (d.getElementById(id)) {return;}
+		    js = d.createElement(s); js.id = id;
+		    js.src = "//connect.facebook.net/en_US/sdk.js";
+		    fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		
+		// login with facebook with extra permissions
+		function login() {
+			FB.login(function(response) {
+				if (response.status === 'connected') {
+		    		document.getElementById('status').innerHTML = 'We are connected.';
+		    		document.getElementById('login').style.visibility = 'hidden';
+		    	} else if (response.status === 'not_authorized') {
+		    		document.getElementById('status').innerHTML = 'We are not logged in.'
+		    	} else {
+		    		document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+		    	}
+			}, {scope: 'email'});
+		}
+		
+		FB.api('/me', { fields: 'id, name, email' }, function(response) 
+                    {
+    var userInfo = document.getElementById('user-info');
+    userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name ;
+                  });
+		
+		
+		// getting basic user info
+		function getInfo() {
+			FB.api('1323522891145808', 'GET', {fields:'name,id,picture.width(150).height(150)'},
+			       function(response) {
+				document.getElementById('status').innerHTML = "<img src='" + response.picture.data.url + "'>";
+				document.getElementById('status').innerHTML = "<img src='" + response.name + "'>";
+			});
+		}
+	</script>
+
+	<div id="status">   hekklll</div>
+	<button onclick="getInfo()">Get info with picture</button>
+	<button onclick="login()" id="login">Login</button>
+</body>
+</html>
